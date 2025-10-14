@@ -1,0 +1,34 @@
+config {
+    type: "table",
+    description: "A comprehensive date dimension table for time-series analysis.",
+    tags: ["dimensions"]
+}
+
+-- This model generates a date dimension table.
+-- It finds the minimum and maximum order dates from the sales headers
+-- and generates a continuous list of dates between them.
+
+WITH date_range AS (
+    SELECT
+        MIN(DATE(order_date)) as min_date,
+        MAX(DATE(order_date)) as max_date
+    FROM
+        `team_day_2025_adventure_works_oltp.sales_order_header`
+)
+
+SELECT
+    CAST(FORMAT_DATE('%Y%m%d', d) AS INT64) as date_key,
+    d as date,
+    EXTRACT(YEAR FROM d) as year,
+    EXTRACT(QUARTER FROM d) as quarter,
+    EXTRACT(MONTH FROM d) as month,
+    FORMAT_DATE('%B', d) as month_name,
+    EXTRACT(DAY FROM d) as day_of_month,
+    EXTRACT(DAYOFWEEK FROM d) as day_of_week,
+    EXTRACT(WEEK FROM d) as week_of_year,
+    CASE
+        WHEN EXTRACT(DAYOFWEEK FROM d) IN (1, 7) THEN false
+        ELSE true
+    END as is_weekday
+FROM
+    UNNEST(GENERATE_DATE_ARRAY((SELECT min_date FROM date_range), (SELECT max_date FROM date_range))) AS d

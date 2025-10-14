@@ -1,0 +1,25 @@
+config {
+    type: "table",
+    description: "Dimension table containing customer attributes.",
+    tags: ["dimensions"]
+}
+
+-- This model combines customer, person, and email information to create a customer dimension.
+-- A surrogate key is generated using FARM_FINGERPRINT on the business key (CustomerID).
+
+SELECT
+    FARM_FINGERPRINT(CAST(c.customer_id AS STRING)) as customer_key,
+    c.customer_id,
+    p.person_type,
+    p.title,
+    p.first_name,
+    p.middle_name,
+    p.last_name,
+    TRIM(CONCAT(p.first_name, ' ', p.middle_name, ' ', p.last_name)) as full_name,
+    ea.email_address
+FROM
+    `team_day_2025_adventure_works_oltp.customer` c
+LEFT JOIN
+    `team_day_2025_adventure_works_oltp.person` p ON c.person_id = p.business_entity_id
+LEFT JOIN
+    `team_day_2025_adventure_works_oltp.email_address` ea ON p.business_entity_id = ea.business_entity_id

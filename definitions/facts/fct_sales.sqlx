@@ -1,0 +1,55 @@
+config {
+    type: "table",
+    description: "Fact table for sales order line items, partitioned by month and clustered by key dimensions.",
+    tags: ["facts"],
+    bigquery: {
+        partitionBy: "DATE_TRUNC(order_date, MONTH)",
+        clusterBy: ["product_key", "customer_key", "territory_key"]
+    }
+}
+
+-- This model creates the main sales fact table.
+-- It joins the sales order details and headers, and then looks up the surrogate keys from the dimension tables.
+-- NOTE: In a real Dataform project, you would use ${ref('dim_customer')} instead of joining directly.
+-- This example joins to the source tables and re-calculates the keys for simplicity.
+
+WITH sales_orders AS (
+    SELECT
+        sod.sales_order_id,
+        sod.sales_order_detail_id,
+        soh.order_date,
+        soh.customer_id,
+        soh.territory_id,
+        sod.product_id,
+        sod.order_qty,
+        sod.unit_price,
+        sod.unit_price_discount,
+        sod.line_total,
+        soh.freight,
+        soh.tax_amt
+    FROM
+        `team_day_2025_adventure_works_oltp.sales_order_detail` sod
+    JOIN
+        `team_day_2025_adventure_works_oltp.sales_order_header` soh ON sod.sales_order_id = soh.sales_order_id
+)
+
+SELECT
+    -- Foreign Keys
+    (SELECT d.date_key FROM ${ref("dim_date")} d WHERE d.date = DATE(so.order_date)) as order_date_key,
+    (SELECT p.product_key FROM ${ref("dim_product")} p WHERE p.product_id = so.product_id) as product_key,
+    (SELECT c.customer_key FROM ${ref("dim_customer")} c WHERE c.customer_id = so.customer_id) as customer_key,
+    (SELECT t.territory_key FROM ${ref("dim_territory")} t WHERE t.territory_id = so.territory_id) as territory_key,
+
+    -- Degenerate Dimensions
+    so.sales_order_id,
+    so.sales_order_detail_id,
+
+    -- Measures
+    so.order_qty,
+    so.unit_price,
+    so.unit_price_discount,
+    so.line_total,
+    so.freight,
+    so.tax_amt
+FROM
+    sales_orders so
