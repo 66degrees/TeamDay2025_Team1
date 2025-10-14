@@ -5,7 +5,7 @@
 -- It is pre-populated with all dates for a given range, allowing for easy filtering
 -- and grouping by year, quarter, month, etc.
 
-CREATE OR REPLACE TABLE team_day_2025_adventure_works_dw.dim_date (
+CREATE OR REPLACE TABLE team_1.dim_date (
     date_key INT64 NOT NULL OPTIONS(description="Surrogate key for the date."),
     date DATE NOT NULL OPTIONS(description="The specific date."),
     year INT64 NOT NULL OPTIONS(description="The four-digit year."),
@@ -28,7 +28,7 @@ OPTIONS(
 -- Purpose: Stores descriptive information about customers. It combines data from
 -- the Customer and Person tables in the source system.
 
-CREATE OR REPLACE TABLE team_day_2025_adventure_works_dw.dim_customer (
+CREATE OR REPLACE TABLE team_1.dim_customer (
     customer_key INT64 NOT NULL OPTIONS(description="Surrogate key for the customer."),
     customer_id INT64 NOT NULL OPTIONS(description="Original customer ID from the OLTP system."),
     person_type STRING OPTIONS(description="Type of person (e.g., SC for Store Contact, IN for Individual Customer)."),
@@ -49,7 +49,7 @@ OPTIONS(
 -- =============================================
 -- Purpose: Stores information about the sales territories where sales occur.
 
-CREATE OR REPLACE TABLE team_day_2025_adventure_works_dw.dim_territory (
+CREATE OR REPLACE TABLE team_1.dim_territory (
     territory_key INT64 NOT NULL OPTIONS(description="Surrogate key for the sales territory."),
     territory_id INT64 NOT NULL OPTIONS(description="Original territory ID from the OLTP system."),
     territory_name STRING NOT NULL OPTIONS(description="The name of the sales territory."),
@@ -67,7 +67,7 @@ OPTIONS(
 -- Purpose: Stores all attributes related to products. This table denormalizes
 -- Product, ProductCategory, and ProductSubcategory for ease of use.
 
-CREATE OR REPLACE TABLE team_day_2025_adventure_works_dw.dim_product (
+CREATE OR REPLACE TABLE team_1.dim_product (
     product_key INT64 NOT NULL OPTIONS(description="Surrogate key for the product."),
     product_id INT64 NOT NULL OPTIONS(description="Original product ID from the OLTP system."),
     product_name STRING NOT NULL OPTIONS(description="Name of the product."),
@@ -95,7 +95,7 @@ OPTIONS(
 -- Optimization: Partitioned by order_date for efficient time-based queries and
 -- clustered by key dimensions to co-locate related data.
 
-CREATE OR REPLACE TABLE team_day_2025_adventure_works_dw.fct_sales (
+CREATE OR REPLACE TABLE team_1.fct_sales (
     -- Foreign Keys to Dimensions
     order_date_key INT64 NOT NULL OPTIONS(description="Foreign key to the dim_date table."),
     product_key INT64 NOT NULL OPTIONS(description="Foreign key to the dim_product table."),
