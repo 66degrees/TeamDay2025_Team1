@@ -10,8 +10,8 @@ config {
 
 WITH date_range AS (
     SELECT
-        MIN(DATE(order_date)) as min_date,
-        MAX(DATE(order_date)) as max_date
+        MIN(DATE(OrderDate)) as min_date,
+        MAX(DATE(OrderDate)) as max_date
     FROM
         `team_day_2025_adventure_works_oltp.sales_order_header`
 )

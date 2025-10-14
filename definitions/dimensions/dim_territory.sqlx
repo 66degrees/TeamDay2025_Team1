@@ -1,17 +1,17 @@
 config {
     type: "table",
-    description: "Dimension table for sales territories.",
+    description: "Dimension table for sales territories, using the natural key.",
     tags: ["dimensions"]
 }
 
 -- This model creates a simple dimension table for sales territories.
--- A surrogate key is generated using FARM_FINGERPRINT on the business key (TerritoryID).
+-- It uses the natural business key (TerritoryID) as the dimension key.
 
 SELECT
-    FARM_FINGERPRINT(CAST(territory_id AS STRING)) as territory_key,
+    territory_id as territory_key,
     territory_id,
     name as territory_name,
     country_region_code,
     `group`
 FROM
-    `team_day_2025_adventure_works_oltp.sales_territory`
+    `team_day_2025_adventure_works_oltp.sales_salesterritory`
