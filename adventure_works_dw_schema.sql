@@ -54,7 +54,7 @@ CREATE OR REPLACE TABLE team_1.dim_territory (
     territory_id INT64 NOT NULL OPTIONS(description="Original territory ID from the OLTP system."),
     territory_name STRING NOT NULL OPTIONS(description="The name of the sales territory."),
     country_region_code STRING NOT NULL OPTIONS(description="The country/region code (e.g., US, GB)."),
-    "group" STRING NOT NULL OPTIONS(description="The sales group the territory belongs to (e.g., North America, Europe).")
+    `group` STRING NOT NULL OPTIONS(description="The sales group the territory belongs to (e.g., North America, Europe).")
 )
 OPTIONS(
     description="Dimension table for sales territories."
@@ -114,10 +114,6 @@ CREATE OR REPLACE TABLE team_1.fct_sales (
     freight NUMERIC NOT NULL OPTIONS(description="Freight cost for the order."),
     tax_amt NUMERIC NOT NULL OPTIONS(description="Tax amount for the order.")
 )
-PARTITION BY
-    DATE_TRUNC(order_date, MONTH)
-CLUSTER BY
-    product_key, customer_key, territory_key
 OPTIONS(
     description="Fact table for sales order line items, partitioned by month and clustered by key dimensions."
 );
