@@ -1,28 +1,28 @@
 target_table,target_column,source_table,source_column,transformation_logic
 dim_date,date_key,Generated,N/A,Surrogate Key
-dim_date,date,Sales.SalesOrderHeader,OrderDate,"Loaded from distinct order dates"
-dim_date,year,Sales.SalesOrderHeader,OrderDate,"EXTRACT(YEAR FROM OrderDate)"
-dim_date,quarter,Sales.SalesOrderHeader,OrderDate,"EXTRACT(QUARTER FROM OrderDate)"
-dim_date,month,Sales.SalesOrderHeader,OrderDate,"EXTRACT(MONTH FROM OrderDate)"
-dim_date,month_name,Sales.SalesOrderHeader,OrderDate,"FORMAT_DATE('%B', OrderDate)"
-dim_date,day_of_month,Sales.SalesOrderHeader,OrderDate,"EXTRACT(DAY FROM OrderDate)"
-dim_date,day_of_week,Sales.SalesOrderHeader,OrderDate,"EXTRACT(DAYOFWEEK FROM OrderDate)"
-dim_date,week_of_year,Sales.SalesOrderHeader,OrderDate,"EXTRACT(WEEK FROM OrderDate)"
-dim_date,is_weekday,Sales.SalesOrderHeader,OrderDate,"CASE WHEN EXTRACT(DAYOFWEEK FROM OrderDate) IN (1, 7) THEN false ELSE true END"
+dim_date,date,Sales_SalesOrderHeader,OrderDate,"Loaded from distinct order dates"
+dim_date,year,Sales_SalesOrderHeader,OrderDate,"EXTRACT(YEAR FROM OrderDate)"
+dim_date,quarter,Sales_SalesOrderHeader,OrderDate,"EXTRACT(QUARTER FROM OrderDate)"
+dim_date,month,Sales_SalesOrderHeader,OrderDate,"EXTRACT(MONTH FROM OrderDate)"
+dim_date,month_name,Sales_SalesOrderHeader,OrderDate,"FORMAT_DATE('%B', OrderDate)"
+dim_date,day_of_month,Sales_SalesOrderHeader,OrderDate,"EXTRACT(DAY FROM OrderDate)"
+dim_date,day_of_week,Sales_SalesOrderHeader,OrderDate,"EXTRACT(DAYOFWEEK FROM OrderDate)"
+dim_date,week_of_year,Sales_SalesOrderHeader,OrderDate,"EXTRACT(WEEK FROM OrderDate)"
+dim_date,is_weekday,Sales_SalesOrderHeader,OrderDate,"CASE WHEN EXTRACT(DAYOFWEEK FROM OrderDate) IN (1, 7) THEN false ELSE true END"
 dim_customer,customer_key,Generated,N/A,Surrogate Key
-dim_customer,customer_id,Sales.Customer,CustomerID,Direct map
-dim_customer,person_type,Person.Person,PersonType,Direct map
-dim_customer,title,Person.Person,Title,Direct map
-dim_customer,first_name,Person.Person,FirstName,Direct map
-dim_customer,middle_name,Person.Person,MiddleName,Direct map
-dim_customer,last_name,Person.Person,LastName,Direct map
-dim_customer,full_name,Person.Person,"FirstName, MiddleName, LastName","CONCAT(FirstName, ' ', MiddleName, ' ', LastName)"
-dim_customer,email_address,Person.EmailAddress,EmailAddress,"Joined via BusinessEntityID"
+dim_customer,customer_id,Sales_Customer,CustomerID,Direct map
+dim_customer,person_type,Person_Person,PersonType,Direct map
+dim_customer,title,Person_Person,Title,Direct map
+dim_customer,first_name,Person_Person,FirstName,Direct map
+dim_customer,middle_name,Person_Person,MiddleName,Direct map
+dim_customer,last_name,Person_Person,LastName,Direct map
+dim_customer,full_name,Person_Person,"FirstName, MiddleName, LastName","CONCAT(FirstName, ' ', MiddleName, ' ', LastName)"
+dim_customer,email_address,Person_EmailAddress,EmailAddress,"Joined via BusinessEntityID"
 dim_territory,territory_key,Generated,N/A,Surrogate Key
-dim_territory,territory_id,Sales.SalesTerritory,TerritoryID,Direct map
-dim_territory,territory_name,Sales.SalesTerritory,Name,Direct map
-dim_territory,country_region_code,Sales.SalesTerritory,CountryRegionCode,Direct map
-dim_territory,group,Sales.SalesTerritory,Group,Direct map
+dim_territory,territory_id,Sales_SalesTerritory,TerritoryID,Direct map
+dim_territory,territory_name,Sales_SalesTerritory,Name,Direct map
+dim_territory,country_region_code,Sales_SalesTerritory,CountryRegionCode,Direct map
+dim_territory,group,Sales_SalesTerritory,Group,Direct map
 dim_product,product_key,Generated,N/A,Surrogate Key
 dim_product,product_id,Production.Product,ProductID,Direct map
 dim_product,product_name,Production.Product,Name,Direct map
@@ -36,15 +36,15 @@ dim_product,product_category_name,Production.ProductCategory,Name,"Joined via Pr
 dim_product,product_subcategory_name,Production.ProductSubcategory,Name,"Joined via Production.Product"
 dim_product,sell_start_date,Production.Product,SellStartDate,Direct map
 dim_product,sell_end_date,Production.Product,SellEndDate,Direct map
-fct_sales,order_date_key,Sales.SalesOrderHeader,OrderDate,"Lookup from dim_date"
-fct_sales,product_key,Sales.SalesOrderDetail,ProductID,"Lookup from dim_product"
-fct_sales,customer_key,Sales.SalesOrderHeader,CustomerID,"Lookup from dim_customer"
-fct_sales,territory_key,Sales.SalesOrderHeader,TerritoryID,"Lookup from dim_territory"
-fct_sales,sales_order_id,Sales.SalesOrderDetail,SalesOrderID,Direct map
-fct_sales,sales_order_detail_id,Sales.SalesOrderDetail,SalesOrderDetailID,Direct map
-fct_sales,order_qty,Sales.SalesOrderDetail,OrderQty,Direct map
-fct_sales,unit_price,Sales.SalesOrderDetail,UnitPrice,Direct map
-fct_sales,unit_price_discount,Sales.SalesOrderDetail,UnitPriceDiscount,Direct map
-fct_sales,line_total,Sales.SalesOrderDetail,LineTotal,Direct map
-fct_sales,freight,Sales.SalesOrderHeader,Freight,"Direct map (Note: applies to all lines in the order)"
-fct_sales,tax_amt,Sales.SalesOrderHeader,TaxAmt,"Direct map (Note: applies to all lines in the order)"
+fct_sales,order_date_key,Sales_SalesOrderHeader,OrderDate,"Lookup from dim_date"
+fct_sales,product_key,Sales_SalesOrderDetail,ProductID,"Lookup from dim_product"
+fct_sales,customer_key,Sales_SalesOrderHeader,CustomerID,"Lookup from dim_customer"
+fct_sales,territory_key,Sales_SalesOrderHeader,TerritoryID,"Lookup from dim_territory"
+fct_sales,sales_order_id,Sales_SalesOrderDetail,SalesOrderID,Direct map
+fct_sales,sales_order_detail_id,Sales_SalesOrderDetail,SalesOrderDetailID,Direct map
+fct_sales,order_qty,Sales_SalesOrderDetail,OrderQty,Direct map
+fct_sales,unit_price,Sales_SalesOrderDetail,UnitPrice,Direct map
+fct_sales,unit_price_discount,Sales_SalesOrderDetail,UnitPriceDiscount,Direct map
+fct_sales,line_total,Sales_SalesOrderDetail,LineTotal,Direct map
+fct_sales,freight,Sales_SalesOrderHeader,Freight,"Direct map (Note: applies to all lines in the order)"
+fct_sales,tax_amt,Sales_SalesOrderHeader,TaxAmt,"Direct map (Note: applies to all lines in the order)"
