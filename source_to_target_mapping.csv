@@ -24,18 +24,18 @@ dim_territory,territory_name,Sales_SalesTerritory,Name,Direct map
 dim_territory,country_region_code,Sales_SalesTerritory,CountryRegionCode,Direct map
 dim_territory,group,Sales_SalesTerritory,Group,Direct map
 dim_product,product_key,Generated,N/A,Surrogate Key
-dim_product,product_id,Production.Product,ProductID,Direct map
-dim_product,product_name,Production.Product,Name,Direct map
-dim_product,product_number,Production.Product,ProductNumber,Direct map
-dim_product,color,Production.Product,Color,Direct map
-dim_product,standard_cost,Production.Product,StandardCost,Direct map
-dim_product,list_price,Production.Product,ListPrice,Direct map
-dim_product,size,Production.Product,Size,Direct map
-dim_product,weight,Production.Product,Weight,Direct map
-dim_product,product_category_name,Production.ProductCategory,Name,"Joined via Production.ProductSubcategory"
-dim_product,product_subcategory_name,Production.ProductSubcategory,Name,"Joined via Production.Product"
-dim_product,sell_start_date,Production.Product,SellStartDate,Direct map
-dim_product,sell_end_date,Production.Product,SellEndDate,Direct map
+dim_product,product_id,Production_Product,ProductID,Direct map
+dim_product,product_name,Production_Product,Name,Direct map
+dim_product,product_number,Production_Product,ProductNumber,Direct map
+dim_product,color,Production_Product,Color,Direct map
+dim_product,standard_cost,Production_Product,StandardCost,Direct map
+dim_product,list_price,Production_Product,ListPrice,Direct map
+dim_product,size,Production_Product,Size,Direct map
+dim_product,weight,Production_Product,Weight,Direct map
+dim_product,product_category_name,Production_ProductCategory,Name,"Joined via Production_ProductSubcategory"
+dim_product,product_subcategory_name,Production_ProductSubcategory,Name,"Joined via Production_Product"
+dim_product,sell_start_date,Production_Product,SellStartDate,Direct map
+dim_product,sell_end_date,Production_Product,SellEndDate,Direct map
 fct_sales,order_date_key,Sales_SalesOrderHeader,OrderDate,"Lookup from dim_date"
 fct_sales,product_key,Sales_SalesOrderDetail,ProductID,"Lookup from dim_product"
 fct_sales,customer_key,Sales_SalesOrderHeader,CustomerID,"Lookup from dim_customer"
