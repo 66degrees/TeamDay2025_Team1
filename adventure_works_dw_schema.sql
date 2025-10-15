@@ -37,7 +37,13 @@ CREATE OR REPLACE TABLE team_1.dim_customer (
     middle_name STRING OPTIONS(description="Customer's middle name."),
     last_name STRING OPTIONS(description="Customer's last name."),
     full_name STRING OPTIONS(description="Concatenated full name of the customer."),
-    email_address STRING OPTIONS(description="Customer's primary email address.")
+    email_address STRING OPTIONS(description="Customer's primary email address."),
+    address_line_1 STRING OPTIONS(description="Customer's primary address."),
+    address_line_2 STRING OPTIONS(description="Customer's secondary address."),
+    city STRING OPTIONS(description="Customer's city."),
+    state_province_name STRING OPTIONS(description="Customer's state or province name."),
+    postal_code STRING OPTIONS(description="Customer's postal code."),
+    country_region_name STRING OPTIONS(description="Customer's country or region name.")
 )
 OPTIONS(
     description="Dimension table containing customer attributes."
@@ -73,14 +79,14 @@ CREATE OR REPLACE TABLE team_1.dim_product (
     product_name STRING NOT NULL OPTIONS(description="Name of the product."),
     product_number STRING NOT NULL OPTIONS(description="Unique product identification number."),
     color STRING OPTIONS(description="Product color."),
-    standard_cost NUMERIC OPTIONS(description="Standard cost of the product."),
-    list_price NUMERIC OPTIONS(description="Selling list price."),
+    standard_cost FLOAT64 OPTIONS(description="Standard cost of the product."),
+    list_price FLOAT64 OPTIONS(description="Selling list price."),
     size STRING OPTIONS(description="Product size."),
-    weight NUMERIC OPTIONS(description="Product weight."),
+    weight FLOAT64 OPTIONS(description="Product weight."),
     product_category_name STRING OPTIONS(description="Name of the product category (denormalized)."),
     product_subcategory_name STRING OPTIONS(description="Name of the product subcategory (denormalized)."),
-    sell_start_date TIMESTAMP OPTIONS(description="Date the product was available for sale."),
-    sell_end_date TIMESTAMP OPTIONS(description="Date the product was discontinued.")
+    sell_start_date DATE OPTIONS(description="Date the product was available for sale."),
+    sell_end_date DATE OPTIONS(description="Date the product was discontinued.")
 )
 OPTIONS(
     description="Dimension table containing denormalized product attributes."

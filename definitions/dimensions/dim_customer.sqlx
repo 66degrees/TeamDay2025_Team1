@@ -16,10 +16,24 @@ SELECT
     p.MiddleName as middle_name,
     p.LastName as last_name,
     TRIM(CONCAT(p.FirstName, ' ', p.MiddleName, ' ', p.LastName)) as full_name,
-    ea.EmailAddress as email_address
+    ea.EmailAddress as email_address,
+    a.AddressLine1 as address_line_1,
+    a.AddressLine2 as address_line_2,
+    a.City as city,
+    sp.Name as state_province_name,
+    a.PostalCode as postal_code,
+    cr.Name as country_region_name
 FROM
-    `team_day_2025_adventure_works_oltp.sales_customer` c
+    `team_day_2025_adventure_works_oltp.Sales_Customer` c
 LEFT JOIN
-    `team_day_2025_adventure_works_oltp.person` p ON c.PersonID = p.BusinessEntityID
+    `team_day_2025_adventure_works_oltp.Person_Person` p ON c.PersonID = p.BusinessEntityID
 LEFT JOIN
-    `team_day_2025_adventure_works_oltp.email_address` ea ON p.BusinessEntityID = ea.BusinessEntityID
+    `team_day_2025_adventure_works_oltp.Person_EmailAddress` ea ON p.BusinessEntityID = ea.BusinessEntityID
+LEFT JOIN
+    `team_day_2025_adventure_works_oltp.Person_BusinessEntityAddress` bea ON p.BusinessEntityID = bea.BusinessEntityID
+LEFT JOIN
+    `team_day_2025_adventure_works_oltp.Person_Address` a ON bea.AddressID = a.AddressID
+LEFT JOIN
+    `team_day_2025_adventure_works_oltp.Person_StateProvince` sp ON a.StateProvinceID = sp.StateProvinceID
+LEFT JOIN
+    `team_day_2025_adventure_works_oltp.Person_CountryRegion` cr ON sp.CountryRegionCode = cr.CountryRegionCode
