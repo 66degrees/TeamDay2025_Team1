@@ -8,10 +8,10 @@ config {
 -- It uses the natural business key (TerritoryID) as the dimension key.
 
 SELECT
-    territory_id as territory_key,
-    territory_id,
+    territoryid as territory_key,
+    territoryid as territory_id,
     name as territory_name,
-    country_region_code,
+    countryregioncode as country_region_code,
     `group`
 FROM
-    `team_day_2025_adventure_works_oltp.sales_salesterritory`
+    `team_day_2025_adventure_works_oltp.Sales_SalesTerritory`
