@@ -5,30 +5,32 @@ This model is designed around a central fact table, `fct_sales`, which contains 
 #### Schema Diagram (Conceptual)
 
 ```
-+---------------------+      +-------------------------+
-|    dim_date         |      |      dim_product        |
-|---------------------|      |-------------------------|
-| - date_key (PK)     |      | - product_key (PK)      |
-| - date              |      | - product_id            |
-| - year              |      | - product_name          |
-| - quarter           |      | - product_number        |
-| - month             |      | - color                 |
-| - day_of_week       |      | - standard_cost         |
-| ...                 |      | - list_price            |
-+---------------------+      | - size                  |
-        |                    | - weight                |
-        |                    | - product_category_name |
-        |                    | - product_subcategory_name|
-        |                    +-------------------------+
++--------------------------+      +----------------------------+
+|        dim_date          |      |        dim_product         |
+|--------------------------|      |----------------------------|
+| - date_key (PK)          |      | - product_key (PK)         |
+| - date                   |      | - product_id               |
+| - year                   |      | - product_name             |
+| - quarter                |      | - product_number           |
+| - month                  |      | - color                    |
+| - month_name             |      | - standard_cost            |
+| - day_of_month           |      | - list_price               |
+| - day_of_week            |      | - size                     |
+| - week_of_year           |      | - weight                   |
+| - is_weekday             |      | - product_category_name    |
++--------------------------+      | - product_subcategory_name |
+        |                         | - sell_start_date          |
+        |                         | - sell_end_date            |
+        |                         +----------------------------+
         |                                |
         |                                |
 +-------------------------------------------------------------+
 |                           fct_sales                           |
 |-------------------------------------------------------------|
+| - order_date_key (FK)                                       |
 | - product_key (FK)                                          |
 | - customer_key (FK)                                         |
 | - territory_key (FK)                                        |
-| - order_date_key (FK)                                       |
 | - sales_order_id (Degenerate Dimension)                     |
 | - sales_order_detail_id (Degenerate Dimension)              |
 | - order_qty (Measure)                                       |
@@ -40,15 +42,25 @@ This model is designed around a central fact table, `fct_sales`, which contains 
 +-------------------------------------------------------------+
         |                                |
         |                                |
-        |                    +-------------------------+
-+---------------------+      |     dim_customer        |
-|   dim_territory     |      |-------------------------|
-|---------------------|      | - customer_key (PK)     |
-| - territory_key (PK)|      | - customer_id           |
-| - territory_name    |      | - person_type           |
-| - country_region    |      | - full_name             |
-| - "group"           |      | - email_address         |
-+---------------------+      +-------------------------+
+        |                         +----------------------------+
++--------------------------+      |       dim_customer         |
+|      dim_territory       |      |----------------------------|
+|--------------------------|      | - customer_key (PK)        |
+| - territory_key (PK)     |      | - customer_id              |
+| - territory_id           |      | - person_type              |
+| - territory_name         |      | - title                    |
+| - country_region_code    |      | - first_name               |
+| - "group"                |      | - middle_name              |
++--------------------------+      | - last_name                |
+                                  | - full_name                |
+                                  | - email_address            |
+                                  | - address_line_1           |
+                                  | - address_line_2           |
+                                  | - city                     |
+                                  | - state_province_name      |
+                                  | - postal_code              |
+                                  | - country_region_name      |
+                                  +----------------------------+
 
 ```
 
