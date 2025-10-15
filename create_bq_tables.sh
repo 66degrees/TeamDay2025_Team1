@@ -13,7 +13,7 @@ set -e # Exit immediately if a command exits with a non-zero status.
 
 # --- Configuration ---
 # The script will use the project configured in your gcloud CLI.
-GCP_PROJECT_ID="dna-team-day-2025-20251003"
+GCP_PROJECT_ID="team_1"
 if [ -z "$GCP_PROJECT_ID" ]; then
     echo "Error: GCP Project ID is not set. Please run 'gcloud config set project YOUR_PROJECT_ID' and try again."
     exit 1
@@ -21,7 +21,7 @@ fi
 
 # The BigQuery dataset (schema) where the tables will be created.
 # This must match the dataset name used in the DDL file.
-DATASET_ID="team_day_2025_adventure_works_dw"
+DATASET_ID="team_1"
 DDL_FILE="adventure_works_dw_schema.sql"
 
 # --- Script Body ---

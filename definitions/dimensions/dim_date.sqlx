@@ -13,7 +13,7 @@ WITH date_range AS (
         MIN(DATE(OrderDate)) as min_date,
         MAX(DATE(OrderDate)) as max_date
     FROM
-        `team_day_2025_adventure_works_oltp.sales_order_header`
+        `team_day_2025_adventure_works_oltp.Sales_SalesOrderHeader`
 )
 
 SELECT
@@ -31,4 +31,4 @@ SELECT
         ELSE true
     END as is_weekday
 FROM
-    UNNEST(GENERATE_DATE_ARRAY((SELECT min_date FROM date_range), (SELECT max_date FROM date_range))) AS d
+    date_range, UNNEST(GENERATE_DATE_ARRAY(min_date, max_date)) AS d
